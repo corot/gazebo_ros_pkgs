@@ -145,6 +145,11 @@ void GazeboRosBumper::OnContact()
 #ifdef ENABLE_PROFILER
   IGN_PROFILE_BEGIN("fill message");
 #endif
+
+  // Do not publish empty contact messages
+  if (this->parentSensor->Contacts().contact_size() <= 0)
+    return;
+
   msgs::Contacts contacts;
   contacts = this->parentSensor->Contacts();
   /// \TODO: need a time for each Contact in i-loop, they may differ
